@@ -21,7 +21,7 @@ const Home = () => {
     const sortBy = sortType.sortProperty.replace("-", "");
     const search = searchValue ? `&search=${searchValue}` : "";
     fetch(
-      `https://62ffcba89350a1e548e68876.mockapi.io/1?${
+      `https://63bc2ed4cf99234bfa7274d3.mockapi.io/1?${
         categoryId > 0 ? `category=${categoryId}` : ""
       }&sortBy=${sortBy}&order=${order}${search}`
     )
