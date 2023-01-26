@@ -1,24 +1,32 @@
 import React, { useDebugValue } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
+import { setCategodyId } from "../redux/slices/filterSlice";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import { SearchContext } from "../App";
 
 const Home = () => {
+  //вытаскиваем из store.js редюсер filter, а из него уже категориайди из filterSlice
   const categoryId = useSelector((state) => state.filter.categoryId);
-  const onChangeCategory = (id) => {console.log(id)};
+  const sortType = useSelector((state) => state.filter.sort.sortProperty);
+  
+  //передает категориАйДи в редукс
+  const dispatch = useDispatch();
+
+  const onChangeCategory = (id) => {
+    //передаем через dispatch айди кнопок категорий
+    dispatch(setCategodyId(id));
+  };
 
   const { searchValue } = React.useContext(SearchContext);
   const [items, setItems] = React.useState([]);
-  const [sortType, setSortType] = React.useState({
-    name: "популярности",
-    sortProperty: "rating",
-  });
+ 
 
   React.useEffect(() => {
-    const order = sortType.sortProperty.includes("-") ? "asc" : "desc";
-    const sortBy = sortType.sortProperty.replace("-", "");
+    const order = sortType.includes("-") ? "asc" : "desc";
+    const sortBy = sortType.replace("-", "");
     const search = searchValue ? `&search=${searchValue}` : "";
     fetch(
       `https://63bc2ed4cf99234bfa7274d3.mockapi.io/1?${
@@ -44,7 +52,7 @@ const Home = () => {
     <>
       <div className="content__top">
         <Categories value={categoryId} onChangeCategory={onChangeCategory} />
-        <Sort value={sortType} onChangeSortType={(i) => setSortType(i)} />
+        <Sort  />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{pizzas}</div>
