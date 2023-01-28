@@ -16,16 +16,18 @@ function Sort() {
   const sort = useSelector((state) => state.filter.sort);
 
   const [open, setOpen] = React.useState(false);
+
+  //получаем ссылку на дом элемент СОРТ
   const sortRef = React.useRef();
-  console.log(sortRef);
 
   const onClickListItem = (obj) => {
     dispatch(setSort(obj));
     setOpen(false);
   };
 
+
   return (
-    <div ref={sortRef} className="sort">
+    <div className="sort">
       <div className="sort__label">
         <svg
           width="10"
